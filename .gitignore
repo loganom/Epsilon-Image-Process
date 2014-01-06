@@ -5,3 +5,4 @@ share/img/list/list_sorted.csv
 share/roster/roster_sorted.csv
 share/img/list/list.csv
 share/roster/roster.csv
+test-epsilon-image-process.sh
