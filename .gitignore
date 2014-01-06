@@ -1,2 +1,3 @@
-share/img/img/*
 .DS_STORE
+share/img/img/*.JPG
+share/output/member/*.JPG
