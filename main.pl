@@ -61,17 +61,23 @@ if($num_images == 0){
 	print "Images to process: $num_images\n";
 }
 
-# sort and create a new file in the same directory with sorted data for both files
-system("head -1 $directory/share/roster/roster.csv > $directory/share/roster/roster_sorted.csv");
-system("sed '1d' $directory/share/roster/roster.csv | sort -d -k3 -t, >> $directory/share/roster/roster_sorted.csv");
-system("head -1 $directory/share/img/list/list.csv > $directory/share/img/list/list_sorted.csv");
-system("sed '1d' $directory/share/img/list/list.csv | sort -d -k3 -t, >> $directory/share/img/list/list_sorted.csv");
+sort_csv("share/img/list/list");
+sort_csv("share/roster/roster");
 
 my %first = read_to_hash("$directory/share/roster/roster_sorted.csv");
 my %second = read_to_hash("$directory/share/img/list/list_sorted.csv");
+
 my %third = (%first,%second);
 
 create_dirs();
+
+# sort csv sort the csv that is passed to this function
+sub sort_csv {
+	my $file = $_[0];
+	# sort and create a new file in the same directory with sorted data for both files
+	system("head -1 $directory/$file.csv > $directory/$file\_sorted.csv");
+	system("sed '1d' $directory/$file.csv | sort -d -k3 -t, >> $directory/$file\_sorted.csv");
+}
 
 # create_dirs create directories for new members 
 sub create_dirs {
@@ -86,13 +92,17 @@ sub create_dirs {
 				unless (-d $path) {
 				    die "Cannot create directory '$path': $error.";
 				}
+				print ("moving $directory/share/img/img/IMG_$third{IMG_ID}->[$v].JPG\n");
 				system("mv $directory/share/img/img/IMG_$third{IMG_ID}->[$v].JPG $path");
+				# need to add some error checking instead of just printing --- moved
+				print ("--- moved to $path\n");
 			}
 			$v++;
 		}
 	}
 }
 
+# read_to_hash reads in a csv file and converts it to a hash
 sub read_to_hash {
 	open(INPUT,$_[0]) or die "ERR";
 	my @columns;
