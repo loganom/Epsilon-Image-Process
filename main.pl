@@ -62,8 +62,6 @@ if($num_images == 0){
 }
 
 # sort and create a new file in the same directory with sorted data for both files
-system("rm $directory/share/roster/roster_sorted.csv");
-system("rm $directory/share/img/list/list_sorted.csv");
 system("head -1 $directory/share/roster/roster.csv > $directory/share/roster/roster_sorted.csv");
 system("sed '1d' $directory/share/roster/roster.csv | sort -d -k3 -t, >> $directory/share/roster/roster_sorted.csv");
 system("head -1 $directory/share/img/list/list.csv > $directory/share/img/list/list_sorted.csv");
@@ -83,7 +81,7 @@ sub create_dirs {
 		my $v = 0;
 		while($v < $roster_line_count) {
 			if($_  == $third{IMG_ID}->[$v]){
-				$path = $directory . "/share/output/member/$third{ID}->[$v]";
+				$path = $directory . "/share/output/$third{ID}->[$v]";
 				mkdir $path or $error = $!;
 				unless (-d $path) {
 				    die "Cannot create directory '$path': $error.";
