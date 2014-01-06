@@ -19,3 +19,5 @@ id,name,email
 ```
 
 Lastly, share/img/img/ should hold all of the images for which you would like to create a directory. The directory names, by defualt, will be the ID value associated with each image. The ID value will be joined with the image name via the csv files.
+
+Output will hold the folders created by this script.
