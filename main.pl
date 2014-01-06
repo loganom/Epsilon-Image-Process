@@ -62,8 +62,12 @@ if($num_images == 0){
 }
 
 # sort and create a new file in the same directory with sorted data for both files
-system("sort -d -k1 -t, $directory/share/roster/roster.csv > $directory/share/roster/roster_sorted.csv");
-system("sort -d -k1 -t, $directory/share/img/list/list.csv > $directory/share/img/list/list_sorted.csv");
+system("rm $directory/share/roster/roster_sorted.csv");
+system("rm $directory/share/img/list/list_sorted.csv");
+system("head -1 $directory/share/roster/roster.csv > $directory/share/roster/roster_sorted.csv");
+system("sed '1d' $directory/share/roster/roster.csv | sort -d -k3 -t, >> $directory/share/roster/roster_sorted.csv");
+system("head -1 $directory/share/img/list/list.csv > $directory/share/img/list/list_sorted.csv");
+system("sed '1d' $directory/share/img/list/list.csv | sort -d -k3 -t, >> $directory/share/img/list/list_sorted.csv");
 
 my %first = read_to_hash("$directory/share/roster/roster_sorted.csv");
 my %second = read_to_hash("$directory/share/img/list/list_sorted.csv");
@@ -73,18 +77,18 @@ create_dirs();
 
 # create_dirs create directories for new members 
 sub create_dirs {
-	foreach(@image_id) { #
+	foreach(@image_id) { 
 		my $error;
 		my $path;
 		my $v = 0;
 		while($v < $roster_line_count) {
-			if($_ == $third{img_id}->[$v]){
-				$path = $directory . "/share/output/member/$third{id}->[$v]";
+			if($_  == $third{IMG_ID}->[$v]){
+				$path = $directory . "/share/output/member/$third{ID}->[$v]";
 				mkdir $path or $error = $!;
 				unless (-d $path) {
 				    die "Cannot create directory '$path': $error.";
 				}
-				system("mv $directory/share/img/img/IMG_$third{img_id}->[$v].JPG $path");
+				system("mv $directory/share/img/img/IMG_$third{IMG_ID}->[$v].JPG $path");
 			}
 			$v++;
 		}
