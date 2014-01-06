@@ -6,16 +6,16 @@ To run this program there are a few requirements.
 
 First, you will need two csv files.
 share/img/list/list.csv should resemble the following structure
-
-name,img_id
-one,3939
-two,3093
-...
+```
+img_id,name,email
+3093,bob,bob@gmail.com
+```
 
 Second, 
 share/roster/roster.csv
-name,id
-two,222
-one,111
+```
+id,name,email
+392,bob,bob@gmail.com
+```
 
 Lastly, share/img/img/ should hold all of the images for which you would like to create a directory. The directory names, by defualt, will be the ID value associated with each image. The ID value will be joined with the image name via the csv files.
