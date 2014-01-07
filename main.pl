@@ -11,6 +11,7 @@ use Text::CSV;
 my $csv = Text::CSV->new({ sep_char => ',' });
 
 my $directory = file(abs_path($0))->dir;
+
 my $img_directory = $directory . "/share/img/img/";
 
 opendir (DIR, $img_directory) or die $!;
@@ -92,14 +93,13 @@ sub create_dirs {
 				unless (-d $path) {
 				    die "Cannot create directory '$path': $error.";
 				}
-				print ("moving $directory/share/img/img/IMG_$third{IMG_ID}->[$v].JPG\n");
 				system("mv $directory/share/img/img/IMG_$third{IMG_ID}->[$v].JPG $path");
-				# need to add some error checking instead of just printing --- moved
-				print ("--- moved to $path\n");
+				print(".");
 			}
 			$v++;
 		}
 	}
+	print("DONE\n");
 }
 
 # read_to_hash reads in a csv file and converts it to a hash
